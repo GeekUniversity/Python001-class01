@@ -46,7 +46,7 @@ DEFAULT_REQUEST_HEADERS = {
     'Content-Type': 'text/plain; charset=UTF-8',
     'Origin': 'https://maoyan.com',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
-    'Cookie': '__mta=150738441.1593157769843.1593160824465.1593161146500.4; uuid_n_v=v1; uuid=8F2963A0B78111EA801551553EAD9849E8BF317E589D41B68B14B6F443E579CD; _csrf=881c753de6d6a03771df0f24440c46402284b4ae084412209952f35da589d0f4; mojo-uuid=90a5645c0238bb3a951ac59e8fd65d83; mojo-session-id={"id":"7e3d93bc6657c31e418683e2b29017e8","time":1593157769493}; _lxsdk_cuid=172ef9a5a3fc8-07571fc6a3cbfd-3b634404-100200-172ef9a5a3fc8; _lxsdk=8F2963A0B78111EA801551553EAD9849E8BF317E589D41B68B14B6F443E579CD; lt=3vkYTSGMiRVJ99Zoas-CTnwvDXEAAAAA5woAAP0L56xTZWSA-mAli6O0geEhxzYIFV5NlCW10zKHRcTc_XBQ1zEJb1fai41iWWdFjA; lt.sig=0kqbR7qaUc8LVsV_z41gSc9nk30; mojo-trace-id=66; Hm_lvt_703e94591e87be68cc8da0da7cbd0be2=1593160833,1593161667,1593162012,1593162021; Hm_lpvt_703e94591e87be68cc8da0da7cbd0be2=1593162021; __mta=150738441.1593157769843.1593161146500.1593162020659.5; _lxsdk_s=172ef9a5a41-f1a-c45-38e%7C%7C93'
+    'Cookie': 'uuid_n_v=v1; uuid=8F2963A0B78111EA801551553EAD9849E8BF317E589D41B68B14B6F443E579CD; mojo-uuid=90a5645c0238bb3a951ac59e8fd65d83; _lxsdk_cuid=172ef9a5a3fc8-07571fc6a3cbfd-3b634404-100200-172ef9a5a3fc8; _lxsdk=8F2963A0B78111EA801551553EAD9849E8BF317E589D41B68B14B6F443E579CD; _csrf=7fe6b8fd7f6009827c861629fa3a689b692edb874432c829f68b2e076f21b0d2; lt=h31FdelCwTksoMj7EAe6GfOW66IAAAAAAwsAABHGRHJIus4lrdzgqc6NmPYFWzQMpRwonE9iCVPCj4bDjgmFxcCukXMPn2pga014vA; lt.sig=O9K2Yocxjo6gTL1h0Q5XTTHMh8k; mojo-session-id={"id":"b3b43f4d0beea2a1aead937ab9702f63","time":1593966163414}; mojo-trace-id=1; Hm_lvt_703e94591e87be68cc8da0da7cbd0be2=1593162021,1593162054,1593964239,1593966163; Hm_lpvt_703e94591e87be68cc8da0da7cbd0be2=1593966163; __mta=150738441.1593157769843.1593964355051.1593966163549.18; _lxsdk_s=1731fac1974-ed2-1bf-8ce%7C%7C6'
 }
 
 # Enable or disable spider middlewares
@@ -60,7 +60,13 @@ DEFAULT_REQUEST_HEADERS = {
 #DOWNLOADER_MIDDLEWARES = {
 #    'maoyanspiders.middlewares.MaoyanspidersDownloaderMiddleware': 543,
 #}
+DOWNLOADER_MIDDLEWARES = {
+    'maoyanspiders.middlewares.MaoyanspidersDownloaderMiddleware': 543,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': None,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'maoyanspiders.middlewares.RandomHttpProxyMiddleware': 400,
 
+}
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -72,7 +78,10 @@ DEFAULT_REQUEST_HEADERS = {
 ITEM_PIPELINES = {
     'maoyanspiders.pipelines.MaoyanspidersPipeline': 300,
 }
-
+HTTP_PROXY_LIST = [
+     'http://95.179.218.202:80',
+     'http://61.135.185.111:9090',
+]
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
